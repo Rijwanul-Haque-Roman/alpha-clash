@@ -46,10 +46,18 @@ function addBg(elementID) {
     .classList.add("bg-amber-500", "text-[#1E0668]");
 }
 
+function removeBg(elementID) {
+  document
+    .getElementById(elementID)
+    .classList.remove("bg-amber-500", "text-[#1E0668]");
+}
+
 function keyPressHandler(event) {
+  if (event.key === "Enter") {
+    location.reload();
+  }
   const pressed = event.key;
   const shouldPress = document.getElementById("alphabet").innerText;
-  const temp = document.getElementById("alphabet");
 
   let life = document.getElementById("life").innerText;
   life = parseInt(life);
@@ -61,15 +69,18 @@ function keyPressHandler(event) {
     score++;
     document.getElementById("live-score").innerText = score;
     document.getElementById("score").innerText = score;
-    console.log(temp.classList);
+    removeBg(shouldPress);
     gameloop();
   } else {
     life--;
     if (life > 0) {
       document.getElementById("life").innerText = life;
     } else if (life <= 0) {
+      document.getElementById("life").innerText = 3;
+      document.getElementById("live-score").innerText = 0;
       hideElement("playground-section");
       showElement("score-section");
+      removeBg(shouldPress);
     }
   }
 
